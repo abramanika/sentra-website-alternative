@@ -1,0 +1,549 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sentra — Public Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Geist+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F2F0EE;        /* Pampas */
+  --paper-2:#EAE7E3;
+  --card:#F7F6F4;
+  --ink:#0F0F0F;          /* Cod Gray */
+  --ink-2:#202020;        /* Mine Shaft */
+  --scorpion:#616060;
+  --silver:#9E9E9E;
+  --swirl:#D2CECA;
+  --line:rgba(15,15,15,0.12);
+  --line-2:rgba(15,15,15,0.07);
+  --accent:#E8552B;       /* Trinidad / burnt orange */
+  --accent-2:#FF4F00;     /* International Orange */
+  --disp:'Archivo',-apple-system,'Segoe UI',sans-serif;
+  --mono:'Geist Mono',ui-monospace,monospace;
+  --sans:'Inter',-apple-system,'Segoe UI',sans-serif;
+  --edge:40px;
+  --guide:38%;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:inherit;text-decoration:none;}
+.mono{font-family:var(--mono);text-transform:uppercase;letter-spacing:0.04em;}
+.wrap{position:relative;max-width:1600px;margin:0 auto;padding:0 var(--edge);}
+
+/* ---- signature: index badge ---- */
+.idx{display:inline-flex;align-items:stretch;font-family:var(--mono);font-size:13px;font-weight:500;line-height:1;}
+.idx b{background:var(--accent);color:#fff;padding:7px 9px;font-weight:500;}
+.idx span{background:var(--paper-2);color:#3a3a3a;padding:7px 11px;text-transform:uppercase;letter-spacing:0.06em;}
+.idx.dark span{background:#1a1a1a;color:#cfcecc;}
+
+/* ---- section scaffold ---- */
+section{position:relative;border-top:1px solid var(--line);}
+.sec-head{padding:64px 0 0 var(--guide);}
+.sec-head h2{font-family:var(--disp);font-weight:700;font-size:clamp(40px,6.4vw,86px);line-height:0.98;letter-spacing:-0.03em;margin-top:26px;}
+.kmono{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:var(--scorpion);}
+
+/* ---- decorative guides ---- */
+.vguide{position:absolute;top:0;bottom:0;left:var(--guide);width:0;border-left:1.5px dashed var(--accent);opacity:0.55;pointer-events:none;z-index:2;}
+.vrule{position:absolute;top:0;bottom:0;width:0;border-left:1px solid var(--line-2);pointer-events:none;z-index:1;}
+.vrule.l{left:16%;} .vrule.r{right:15%;}
+
+/* ---- nav ---- */
+.nav{position:sticky;top:0;z-index:40;background:rgba(242,240,238,0.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+.nav .row{display:flex;align-items:center;justify-content:space-between;padding:18px var(--edge);}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--disp);font-weight:700;font-size:20px;letter-spacing:0.02em;}
+.glyph{width:26px;height:26px;background:var(--ink);border-radius:7px;position:relative;flex:0 0 auto;}
+.glyph::before{content:"";position:absolute;inset:6px;border:2.4px solid var(--accent);border-radius:3px;border-right-color:transparent;border-bottom-color:transparent;transform:rotate(45deg);}
+.nav .mid{display:flex;align-items:center;gap:8px;}
+.nav .book{display:flex;align-items:center;gap:9px;font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:0.06em;background:var(--ink);color:#fff;padding:11px 16px;border-radius:4px;}
+.nav .book:hover{background:var(--accent);}
+@media(max-width:820px){.nav .mid .idx{display:none;}}
+
+/* ---- hero ---- */
+.hero{border-top:none;padding-bottom:0;}
+.hero .inner{position:relative;padding:70px 0 0;}
+.hero .badge-row{padding-left:var(--guide);}
+.hero h1{font-family:var(--disp);font-weight:700;font-size:clamp(46px,7.6vw,104px);line-height:0.95;letter-spacing:-0.035em;padding-left:var(--guide);margin-top:30px;max-width:1180px;}
+.hero .sub{font-family:var(--mono);font-size:14px;line-height:1.7;text-transform:uppercase;letter-spacing:0.04em;color:var(--scorpion);margin-left:var(--guide);margin-top:26px;max-width:520px;}
+.hero .terrain{position:relative;height:150px;margin-top:36px;
+  -webkit-mask-image:linear-gradient(to bottom,transparent,#000 40%,#000 70%,transparent);
+  mask-image:linear-gradient(to bottom,transparent,#000 40%,#000 70%,transparent);
+  background-image:radial-gradient(rgba(15,15,15,0.22) 1px,transparent 1.4px);background-size:7px 7px;opacity:0.5;}
+/* node-box strip on the left of hero */
+.nodegrid{position:absolute;left:calc(var(--guide) - 210px);top:20px;display:grid;grid-template-columns:repeat(2,34px);gap:8px;}
+.nodegrid .nb{width:34px;height:34px;border:1px solid var(--line);background:var(--card);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;color:var(--silver);}
+.nodegrid .nb.on{background:var(--accent);border-color:var(--accent);color:#fff;}
+.hatch{position:absolute;right:9%;top:34px;width:96px;height:96px;background:repeating-linear-gradient(45deg,var(--accent) 0 2px,transparent 2px 7px);border:1px solid var(--accent);}
+.hatch::after{content:"";position:absolute;inset:34px;background:#fff;}
+/* split CTA bar */
+.ctabar{display:flex;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:10px;}
+.ctabar a{flex:1;text-align:center;font-family:var(--mono);font-size:13px;text-transform:uppercase;letter-spacing:0.06em;padding:24px 10px;}
+.ctabar a.w{background:transparent;}
+.ctabar a.w:hover{background:#fff;}
+.ctabar a.b{background:var(--ink);color:#fff;}
+.ctabar a.b:hover{background:var(--accent);}
+/* hero stats with corner brackets */
+.hstats{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--line);}
+.hstats .st{position:relative;padding:26px 0 30px 22px;}
+.hstats .st + .st{border-left:1px solid var(--line);padding-left:44px;}
+.hstats .st::before{content:"";position:absolute;left:22px;top:20px;width:9px;height:9px;border-top:2px solid var(--accent);border-left:2px solid var(--accent);}
+.hstats .st + .st::before{left:44px;}
+.hstats .st .l1{font-family:var(--mono);font-size:12.5px;text-transform:uppercase;letter-spacing:0.04em;color:var(--ink);margin-top:18px;}
+.hstats .st .l2{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:0.03em;color:var(--silver);}
+.arrows{padding:14px 0;text-align:center;font-family:var(--mono);color:var(--accent);letter-spacing:0.5em;}
+
+/* ---- generic content pad ---- */
+.pad{padding-left:var(--guide);}
+.pad-full{padding:0 0 84px;}
+
+/* areas cards */
+.areas-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0;margin-top:52px;border-top:1px solid var(--line);}
+.acard{position:relative;padding:30px 34px 40px;border-bottom:1px solid var(--line);}
+.acard:nth-child(odd){border-right:1px solid var(--line);}
+.acard .n{font-family:var(--mono);font-size:12px;color:var(--silver);}
+.acard h3{font-family:var(--disp);font-weight:600;font-size:26px;letter-spacing:-0.02em;margin:14px 0 12px;}
+.acard p{color:var(--scorpion);font-size:15px;max-width:320px;}
+.acard .tick{position:absolute;right:30px;top:30px;width:22px;height:22px;border:1px solid var(--line);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:13px;}
+.quotebar{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:34px;}
+.quotebar .q{font-family:var(--disp);font-weight:600;font-size:22px;letter-spacing:-0.02em;max-width:520px;}
+.quotebar .who{font-family:var(--mono);font-size:12px;color:var(--silver);text-transform:uppercase;}
+.btn-out{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:0.05em;border:1px solid var(--ink);padding:12px 18px;border-radius:4px;}
+.btn-out:hover{background:var(--ink);color:#fff;}
+
+/* process */
+.proc{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);margin-top:52px;}
+.pstep{padding:26px 26px 34px;border-bottom:1px solid var(--line);}
+.pstep + .pstep{border-left:1px solid var(--line);}
+.pstep .dot{font-family:var(--mono);font-size:12px;color:var(--accent);}
+.pstep h4{font-family:var(--disp);font-weight:600;font-size:20px;letter-spacing:-0.015em;margin:14px 0 12px;line-height:1.1;}
+.pstep p{font-size:14px;color:var(--scorpion);}
+.pipe{display:flex;gap:0;border-bottom:1px solid var(--line);}
+.pipe span{flex:1;text-align:center;font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:0.05em;color:var(--scorpion);padding:16px 6px;}
+.pipe span + span{border-left:1px solid var(--line);}
+.pipe b{color:var(--accent);}
+
+/* results big numbers */
+.res{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);margin-top:52px;}
+.rcell{padding:30px 30px 40px;border-bottom:1px solid var(--line);}
+.rcell + .rcell{border-left:1px solid var(--line);}
+.rcell .big{font-family:var(--disp);font-weight:700;font-size:clamp(54px,7vw,92px);line-height:0.9;letter-spacing:-0.04em;}
+.rcell .big sup{font-size:0.4em;vertical-align:super;color:var(--accent);}
+.rcell .lab{font-family:var(--mono);font-size:13px;text-transform:uppercase;color:var(--ink);margin:16px 0 8px;}
+.rcell p{font-size:14px;color:var(--scorpion);max-width:280px;}
+
+/* projects / case study */
+.case{border:1px solid var(--line);margin-top:52px;background:var(--card);}
+.case .top{display:flex;justify-content:space-between;align-items:flex-start;padding:34px;border-bottom:1px solid var(--line);gap:30px;flex-wrap:wrap;}
+.case .top h3{font-family:var(--disp);font-weight:700;font-size:clamp(30px,4vw,52px);letter-spacing:-0.03em;line-height:1;}
+.case .top p{color:var(--scorpion);max-width:460px;font-size:15px;}
+.case .grid{display:grid;grid-template-columns:repeat(3,1fr);}
+.case .cc{padding:28px 34px 34px;}
+.case .cc + .cc{border-left:1px solid var(--line);}
+.case .cc .k{font-family:var(--mono);font-size:12px;color:var(--accent);text-transform:uppercase;}
+.case .cc .v{font-family:var(--disp);font-weight:700;font-size:34px;letter-spacing:-0.02em;margin:12px 0 6px;}
+.case .cc .d{font-family:var(--mono);font-size:11.5px;text-transform:uppercase;color:var(--silver);letter-spacing:0.03em;}
+
+/* environments / industry grid */
+.envs{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);margin-top:52px;}
+.env{padding:26px 26px 30px;border-bottom:1px solid var(--line);}
+.env:not(:nth-child(3n)){border-right:1px solid var(--line);}
+.env .h{font-family:var(--disp);font-weight:600;font-size:20px;letter-spacing:-0.015em;margin-bottom:16px;}
+.env ul{list-style:none;}
+.env li{display:flex;gap:10px;align-items:baseline;font-size:14.5px;color:var(--scorpion);padding:7px 0;border-top:1px solid var(--line-2);}
+.env li b{color:var(--accent);font-family:var(--mono);font-size:12px;}
+
+/* stack / integrations node graph */
+.stackwrap{margin-top:20px;padding-bottom:70px;}
+.graph{position:relative;width:100%;max-width:1000px;height:620px;margin:10px auto 0;}
+.graph svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;}
+.node{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:9px;font-family:var(--sans);font-weight:500;font-size:16px;color:#1a1a1a;white-space:nowrap;background:var(--paper);padding:2px 4px;}
+.node .ic{width:30px;height:30px;border-radius:8px;background:#1c1c1c;color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-weight:700;font-size:14px;flex:0 0 auto;}
+.node.gray{color:#8b8b8b;} .node.gray .ic{background:#b8b5b1;}
+.center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:132px;height:132px;background:var(--paper-2);display:flex;align-items:center;justify-content:center;}
+.center .brk{position:absolute;width:20px;height:20px;border:2px solid var(--accent);}
+.center .brk.tl{left:-1px;top:-1px;border-right:0;border-bottom:0;}
+.center .brk.tr{right:-1px;top:-1px;border-left:0;border-bottom:0;}
+.center .brk.bl{left:-1px;bottom:-1px;border-right:0;border-top:0;}
+.center .brk.br{right:-1px;bottom:-1px;border-left:0;border-top:0;}
+.center .cg{width:46px;height:46px;background:var(--ink);border-radius:12px;position:relative;}
+.center .cg::before{content:"";position:absolute;inset:11px;border:3px solid var(--accent);border-radius:5px;border-right-color:transparent;border-bottom-color:transparent;transform:rotate(45deg);}
+.floatn{animation:float 6s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translate(-50%,-50%)}50%{transform:translate(-50%,calc(-50% - 7px))}}
+.stack-note{margin-left:var(--guide);margin-top:6px;color:var(--scorpion);font-family:var(--mono);font-size:13px;text-transform:uppercase;letter-spacing:0.03em;max-width:420px;}
+
+/* value */
+.val{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--line);margin-top:52px;}
+.vcell{padding:28px 32px 34px;border-bottom:1px solid var(--line);}
+.vcell:nth-child(odd){border-right:1px solid var(--line);}
+.vcell .n{font-family:var(--mono);font-size:12px;color:var(--silver);}
+.vcell h4{font-family:var(--disp);font-weight:600;font-size:23px;letter-spacing:-0.02em;margin:12px 0 10px;}
+.vcell p{color:var(--scorpion);font-size:15px;max-width:380px;}
+
+/* testimonials */
+.tgrid{display:grid;grid-template-columns:2fr 1fr;border-top:1px solid var(--line);margin-top:52px;}
+.tmain{padding:36px;border-right:1px solid var(--line);}
+.tmain .stars{color:var(--accent);letter-spacing:3px;font-size:15px;}
+.tmain blockquote{font-family:var(--disp);font-weight:500;font-size:clamp(22px,2.6vw,32px);line-height:1.25;letter-spacing:-0.02em;margin:20px 0 26px;max-width:640px;}
+.tmain .by{font-family:var(--mono);font-size:12px;text-transform:uppercase;color:var(--scorpion);}
+.tmain .by b{color:var(--ink);}
+.trate{padding:36px;display:flex;flex-direction:column;justify-content:center;}
+.trate .score{font-family:var(--disp);font-weight:700;font-size:76px;letter-spacing:-0.04em;line-height:1;}
+.trate .score span{font-size:0.4em;color:var(--silver);}
+.trate p{font-family:var(--mono);font-size:12px;text-transform:uppercase;color:var(--silver);margin-top:12px;}
+
+/* pricing */
+.price{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);margin-top:52px;}
+.tier{padding:30px 30px 34px;border-bottom:1px solid var(--line);position:relative;}
+.tier + .tier{border-left:1px solid var(--line);}
+.tier.pop{background:var(--ink);color:var(--paper);}
+.tier .tag{display:flex;justify-content:space-between;align-items:center;}
+.tier .name{font-family:var(--mono);font-size:13px;text-transform:uppercase;letter-spacing:0.08em;}
+.tier.pop .name{color:var(--accent);}
+.tier .pill{font-family:var(--mono);font-size:10px;text-transform:uppercase;background:var(--accent);color:#fff;padding:3px 8px;border-radius:3px;}
+.tier .cost{font-family:var(--disp);font-weight:700;font-size:52px;letter-spacing:-0.03em;margin:22px 0 2px;}
+.tier .per{font-family:var(--mono);font-size:12px;text-transform:uppercase;color:var(--silver);}
+.tier .desc{font-size:14px;color:var(--scorpion);margin:14px 0 20px;max-width:230px;}
+.tier.pop .desc{color:var(--swirl);}
+.tier ul{list-style:none;margin-bottom:24px;}
+.tier li{display:flex;gap:10px;align-items:baseline;font-size:14px;padding:8px 0;border-top:1px solid var(--line);}
+.tier.pop li{border-top-color:rgba(255,255,255,0.14);}
+.tier li em{color:var(--accent);font-style:normal;font-family:var(--mono);font-size:11px;}
+.tier .buy{display:block;text-align:center;font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:0.05em;padding:14px;border-radius:4px;background:var(--ink);color:#fff;}
+.tier.pop .buy{background:var(--accent);}
+.tier .buy:hover{background:var(--accent);}
+
+/* faq */
+.faq{border-top:1px solid var(--line);margin-top:52px;}
+.qa{border-bottom:1px solid var(--line);}
+.qa summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:26px 4px;font-family:var(--disp);font-weight:600;font-size:clamp(18px,2vw,24px);letter-spacing:-0.02em;}
+.qa summary::-webkit-details-marker{display:none;}
+.qa summary .pm{color:var(--accent);font-family:var(--mono);font-size:22px;transition:transform .2s;}
+.qa[open] summary .pm{transform:rotate(45deg);}
+.qa .ans{padding:0 4px 28px;color:var(--scorpion);font-size:15.5px;max-width:760px;}
+.faq-side{padding:30px 0 0 var(--guide);display:flex;gap:16px;align-items:center;flex-wrap:wrap;}
+.faq-side .m{font-family:var(--mono);font-size:12px;text-transform:uppercase;color:var(--silver);}
+
+/* footer */
+footer{background:var(--ink);color:var(--paper);border-top:1px solid var(--line);margin-top:0;}
+.foot{padding:70px var(--edge) 30px;max-width:1600px;margin:0 auto;position:relative;}
+.foot .contact{display:flex;gap:26px;flex-wrap:wrap;font-family:var(--mono);font-size:13px;text-transform:uppercase;color:var(--swirl);letter-spacing:0.03em;}
+.foot .contact a:hover{color:var(--accent);}
+.foot h3{font-family:var(--disp);font-weight:700;font-size:clamp(34px,5vw,64px);letter-spacing:-0.03em;line-height:0.98;margin:40px 0 46px;max-width:640px;}
+.foot .cols{display:grid;grid-template-columns:1.1fr 1fr 1.4fr;gap:40px;border-top:1px solid rgba(255,255,255,0.14);padding-top:34px;}
+.fnav{display:flex;flex-direction:column;gap:12px;}
+.fnav a{color:var(--swirl);font-size:15px;} .fnav a:hover{color:#fff;}
+.fform label{display:block;font-family:var(--mono);font-size:11px;text-transform:uppercase;color:var(--silver);margin-bottom:6px;}
+.fform input{width:100%;background:transparent;border:1px solid rgba(255,255,255,0.2);color:#fff;padding:12px 14px;font-family:var(--mono);font-size:12px;text-transform:uppercase;margin-bottom:14px;border-radius:3px;}
+.fform input::placeholder{color:#6b6b6b;}
+.fform button{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:0.05em;background:var(--accent);color:#fff;border:0;padding:13px 22px;border-radius:4px;cursor:pointer;}
+.foot .base{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:44px;font-family:var(--mono);font-size:11px;text-transform:uppercase;color:var(--silver);letter-spacing:0.03em;}
+.foot .base b{color:var(--accent);}
+
+@media(max-width:900px){
+  :root{--guide:0px;}
+  .vguide,.vrule,.nodegrid,.hatch{display:none;}
+  .areas-grid,.proc,.res,.envs,.val,.price,.case .grid,.tgrid{grid-template-columns:1fr;}
+  .hstats{grid-template-columns:1fr;}
+  .hstats .st + .st{border-left:0;padding-left:22px;}
+  .hstats .st + .st::before{left:22px;}
+  .pipe{flex-wrap:wrap;}
+  .graph{height:520px;}
+  .foot .cols{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="row">
+    <a class="brand" href="#"><span class="glyph"></span>SENTRA</a>
+    <div class="mid"><span class="idx"><b>01</b><span>Signal</span></span></div>
+    <a class="book" href="#contact">Request a briefing <span>→</span></a>
+  </div>
+</header>
+
+<!-- HERO 01 -->
+<section class="hero wrap">
+  <span class="vguide"></span><span class="vrule l"></span><span class="vrule r"></span>
+  <div class="inner">
+    <div class="nodegrid">
+      <div class="nb">01</div><div class="nb">02</div>
+      <div class="nb on">03</div><div class="nb">04</div>
+      <div class="nb">05</div><div class="nb">06</div>
+    </div>
+    <div class="hatch"></div>
+    <div class="badge-row"><span class="idx"><b>01</b><span>Intro</span></span></div>
+    <h1>Measure how narratives form, spread &amp; gain influence</h1>
+    <p class="sub">We build discourse-intelligence systems that measure public narratives in real time — so open societies see the move forming.</p>
+    <div class="terrain"></div>
+  </div>
+  <div class="ctabar">
+    <a class="w" href="#contact">Request a briefing</a>
+    <a class="b" href="#process">How it works</a>
+  </div>
+  <div class="hstats">
+    <div class="st"><div class="l1">Real-time signal</div><div class="l2">Facebook today, Telegram next</div></div>
+    <div class="st"><div class="l1">Cluster-level</div><div class="l2">Coordination, computed</div></div>
+    <div class="st"><div class="l1">Group-level</div><div class="l2">Never per-account</div></div>
+  </div>
+  <div class="arrows">→ → →</div>
+</section>
+
+<!-- 02 AREAS -->
+<section class="wrap">
+  <span class="vguide"></span><span class="vrule l"></span><span class="vrule r"></span>
+  <div class="sec-head"><span class="idx"><b>02</b><span>Areas</span></span><h2>What we<br>measure</h2></div>
+  <div class="pad-full">
+    <div class="areas-grid">
+      <div class="acard"><span class="tick">↗</span><div class="n">01</div><h3>Narrative detection</h3><p>Spot narratives as they take shape across public feeds — before they consolidate into consensus.</p></div>
+      <div class="acard"><span class="tick">↗</span><div class="n">02</div><h3>Coordination mapping</h3><p>Cross-account behaviour computed at the cluster level. Inauthenticity is judged, never assigned per account.</p></div>
+      <div class="acard"><span class="tick">↗</span><div class="n">03</div><h3>Audience psychographics</h3><p>Group-level segment mapping of who a narrative moves — a complement to survey research, not a replacement.</p></div>
+      <div class="acard"><span class="tick">↗</span><div class="n">04</div><h3>Influence &amp; reach</h3><p>Measure how far a narrative travels and whose discourse it shifts — always at the group level.</p></div>
+    </div>
+    <div class="quotebar">
+      <div><div class="q">“We built the measurement around how discourse actually moves.”</div><div class="who" style="margin-top:8px">Nika, Director</div></div>
+      <a class="btn-out" href="#products">Explore all instruments →</a>
+    </div>
+  </div>
+</section>
+
+<!-- 03 PROCESS -->
+<section class="wrap" id="process">
+  <span class="vguide"></span><span class="vrule l"></span><span class="vrule r"></span>
+  <div class="sec-head"><span class="idx"><b>03</b><span>Process</span></span><h2>How the<br>signal is built</h2></div>
+  <div class="pad-full">
+    <div class="pipe"><span>Feeds In <b>&gt;</b></span><span>Model <b>&gt;</b></span><span>Coordination <b>&gt;</b></span><span>Signal <b>&gt;</b></span></div>
+    <div class="proc">
+      <div class="pstep"><div class="dot">.01</div><h4>Ingest public feeds</h4><p>Public discourse is captured and structured. Nothing is inferred that was not first observed.</p></div>
+      <div class="pstep"><div class="dot">.02</div><h4>Model the discourse</h4><p>Volume, velocity and framing are computed. Meaning is read and narrated by the model.</p></div>
+      <div class="pstep"><div class="dot">.03</div><h4>Compute coordination</h4><p>Cluster-level behaviour reveals coordination. Inauthenticity is judged, never per account.</p></div>
+      <div class="pstep"><div class="dot">.04</div><h4>Narrate the signal</h4><p>The output is early warning — a complement to survey research, not a forecast.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 RESULTS -->
+<section class="wrap">
+  <span class="vguide"></span><span class="vrule l"></span><span class="vrule r"></span>
+  <div class="sec-head"><span class="idx"><b>04</b><span>Results</span></span><h2>Signal, in<br>practice</h2></div>
+  <div class="pad-full">
+    <div class="res">
+      <div class="rcell"><div class="big">24/7</div><div class="lab">Continuous monitoring</div><p>Public discourse is watched around the clock, in the languages of the region.</p></div>
+      <div class="rcell"><div class="big">100<sup>%</sup></div><div class="lab">Group-level</div><p>Every psychographic and coordination read stays at the group or cluster level.</p></div>
+      <div class="rcell"><div class="big">0</div><div class="lab">Individuals profiled</div><p>No per-account surveillance. No individual profiling. Ever.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 PROJECTS -->
+<section class="wrap">
+  <span class="vguide"></span><span class="vrule l"></span><span class="vrule r"></span>
+  <div class="sec-head"><span class="idx"><b>05</b><span>Field studies</span></span><h2>Case<br>studies</h2></div>
+  <div class="pad-full">
+    <div class="case">
+      <div class="top">
+        <h3>Regional<br>Discourse Audit</h3>
+        <p>A six-week study of how a cross-border narrative formed and spread across public Facebook communities, mapping the clusters that carried it and the audiences it moved.</p>
+      </div>
+      <div class="grid">
+        <div class="cc"><div class="k">Problem &gt;</div><div class="v">Opaque</div><div class="d">Narrative origins unclear</div></div>
+        <div class="cc"><div class="k">What we did &gt;</div><div class="v">Mapped</div><div class="d">Clusters &amp; coordination</div></div>
+        <div class="cc"><div class="k">Result &gt;</div><div class="v">14d</div><div class="d">Earlier warning</div></div>
+      </div>
+    </div>
+    <div style="margin-top:28px"><a class="btn-out" href="#">See all field studies →</a></div>
+  </div>
+</section>
+
+<!-- 06 ENVIRONMENTS -->
+<section class="wrap">
+  <span class="vguide"></span><span class="vrule l"></span><span class="vrule r"></span>
+  <div class="sec-head"><span class="idx"><b>06</b><span>Environments</span></span><h2>Built for<br>who needs it</h2></div>
+  <div class="pad-full">
+    <div class="envs">
+      <div class="env"><div class="h">Newsrooms</div><ul><li><b>&gt;</b> Narrative tracking</li><li><b>&gt;</b> Source verification</li><li><b>&gt;</b> Trend briefs</li><li><b>&gt;</b> Coordination alerts</li></ul></div>
+      <div class="env"><div class="h">Election monitors</div><ul><li><b>&gt;</b> Coordinated campaigns</li><li><b>&gt;</b> Audience mapping</li><li><b>&gt;</b> Early warning</li><li><b>&gt;</b> Incident logs</li></ul></div>
+      <div class="env"><div class="h">Civil society</div><ul><li><b>&gt;</b> Discourse health</li><li><b>&gt;</b> Disinfo mapping</li><li><b>&gt;</b> Public reports</li><li><b>&gt;</b> Audit packs</li></ul></div>
+      <div class="env"><div class="h">Government &amp; policy</div><ul><li><b>&gt;</b> Situational awareness</li><li><b>&gt;</b> Narrative briefs</li><li><b>&gt;</b> Sovereign hosting</li><li><b>&gt;</b> Methodology review</li></ul></div>
+      <div class="env"><div class="h">Research institutes</div><ul><li><b>&gt;</b> Longitudinal data</li><li><b>&gt;</b> Group psychographics</li><li><b>&gt;</b> Exportable datasets</li><li><b>&gt;</b> Survey complement</li></ul></div>
+      <div class="env"><div class="h">Platforms</div><ul><li><b>&gt;</b> Coordination signals</li><li><b>&gt;</b> Cluster detection</li><li><b>&gt;</b> Integrity metrics</li><li><b>&gt;</b> API access</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 STACK -->
+<section class="wrap">
+  <span class="vguide"></span><span class="vrule l"></span><span class="vrule r"></span>
+  <div class="sec-head"><span class="idx"><b>07</b><span>Stack</span></span><h2>Integrations</h2></div>
+  <div class="stackwrap">
+    <div class="graph" id="graph">
+      <svg id="gsvg" preserveAspectRatio="none"></svg>
+      <div class="center"><span class="brk tl"></span><span class="brk tr"></span><span class="brk bl"></span><span class="brk br"></span><span class="cg"></span></div>
+      <!-- nodes injected by JS -->
+    </div>
+    <p class="stack-note">We connect the public sources where discourse lives into one measured system — no manual collection, no blind spots.</p>
+  </div>
+</section>
+
+<!-- 08 VALUE -->
+<section class="wrap">
+  <span class="vguide"></span><span class="vrule l"></span><span class="vrule r"></span>
+  <div class="sec-head"><span class="idx"><b>08</b><span>Value</span></span><h2>Why<br>Sentra</h2></div>
+  <div class="pad-full">
+    <div class="val">
+      <div class="vcell"><div class="n">.01</div><h4>Honest by construction</h4><p>Code counts, the model narrates. We never claim what we did not observe.</p></div>
+      <div class="vcell"><div class="n">.02</div><h4>Group-level only</h4><p>Psychographics and coordination stay at the group or cluster level — never per person.</p></div>
+      <div class="vcell"><div class="n">.03</div><h4>A complement, not a replacement</h4><p>Sentra measures discourse as it moves — alongside survey research, not instead of it.</p></div>
+      <div class="vcell"><div class="n">.04</div><h4>We see the move forming</h4><p>Early warning from observed signals. We surface the move — we do not forecast it.</p></div>
+    </div>
+    <div class="quotebar"><div class="q">“Focused only on measurable, accountable signal.”</div><div class="who">Nika, Director</div></div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="wrap">
+  <span class="vguide"></span><span class="vrule l"></span><span class="vrule r"></span>
+  <div class="sec-head"><span class="idx"><b>09</b><span>Voices</span></span><h2>What partners<br>say</h2></div>
+  <div class="pad-full">
+    <div class="tgrid">
+      <div class="tmain">
+        <div class="stars">★★★★★</div>
+        <blockquote>Sentra saw the coordination forming days before it surfaced in our coverage — and showed its working the whole way.</blockquote>
+        <div class="by"><b>An editor</b> · Regional newsroom</div>
+      </div>
+      <div class="trate">
+        <div class="score">4.9<span>/5</span></div>
+        <p>Based on partner<br>evaluations</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="wrap" id="pricing">
+  <span class="vguide"></span><span class="vrule l"></span><span class="vrule r"></span>
+  <div class="sec-head"><span class="idx"><b>10</b><span>Access</span></span><h2>Pricing</h2></div>
+  <div class="pad-full">
+    <div class="price">
+      <div class="tier">
+        <div class="tag"><span class="name">Signal</span></div>
+        <div class="cost">$1,500</div><div class="per">/ month</div>
+        <div class="desc">For small teams tracking one discourse domain.</div>
+        <ul><li><em>&gt;</em> One discourse domain</li><li><em>&gt;</em> Weekly narrative brief</li><li><em>&gt;</em> Coordination alerts</li><li><em>&gt;</em> Dashboard access</li></ul>
+        <a class="buy" href="#contact">Request access</a>
+      </div>
+      <div class="tier pop">
+        <div class="tag"><span class="name">Authority</span><span class="pill">Popular</span></div>
+        <div class="cost">$3,500</div><div class="per">/ month</div>
+        <div class="desc">For organisations running multiple domains in real time.</div>
+        <ul><li><em>&gt;</em> Up to three domains</li><li><em>&gt;</em> Real-time monitoring</li><li><em>&gt;</em> Group psychographics</li><li><em>&gt;</em> Early-warning signals</li><li><em>&gt;</em> Named analyst</li></ul>
+        <a class="buy" href="#contact">Request access</a>
+      </div>
+      <div class="tier">
+        <div class="tag"><span class="name">Sovereign</span></div>
+        <div class="cost">$7,500</div><div class="per">/ month</div>
+        <div class="desc">For institutions with advanced, accountable needs.</div>
+        <ul><li><em>&gt;</em> Unlimited domains</li><li><em>&gt;</em> Dedicated analyst</li><li><em>&gt;</em> Custom taxonomies</li><li><em>&gt;</em> Audit pack + method</li><li><em>&gt;</em> Priority warning</li></ul>
+        <a class="buy" href="#contact">Request access</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="wrap">
+  <span class="vguide"></span><span class="vrule l"></span><span class="vrule r"></span>
+  <div class="sec-head"><span class="idx"><b>11</b><span>FAQ</span></span><h2>Questions,<br>answered</h2></div>
+  <div class="pad-full">
+    <div class="faq">
+      <details class="qa" open><summary>Do you identify individuals? <span class="pm">+</span></summary><div class="ans">No. All psychographics and coordination are computed at the group or cluster level — never per account, never per person.</div></details>
+      <details class="qa"><summary>Is this a replacement for polling? <span class="pm">+</span></summary><div class="ans">No. Sentra is a complement to survey research. It measures discourse as it moves, in real time, where opinion actually forms.</div></details>
+      <details class="qa"><summary>Which platforms do you cover? <span class="pm">+</span></summary><div class="ans">Public Facebook today, with Telegram next. Coverage extends as the standard expands across Eastern Europe.</div></details>
+      <details class="qa"><summary>Do you forecast events? <span class="pm">+</span></summary><div class="ans">We see the move forming. Sentra surfaces early warning from observed signals — it does not predict outcomes.</div></details>
+      <details class="qa"><summary>Do we need technical knowledge to start? <span class="pm">+</span></summary><div class="ans">No. Sentra is delivered as briefings and a dashboard. An analyst narrates the signal; the method stays auditable.</div></details>
+    </div>
+    <div class="faq-side"><span class="m">Got another question?</span><a class="btn-out" href="#contact">Send message →</a></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="foot">
+    <div class="contact">
+      <a href="mailto:hello@sentra.ge">hello@sentra.ge</a>
+      <span>Tbilisi · Eastern Europe</span>
+      <a href="#">X</a><a href="#">LN</a><a href="#">FB</a>
+    </div>
+    <h3>Measure how narratives move — before they move you.</h3>
+    <div class="cols">
+      <div class="fnav">
+        <a href="#">Home</a><a href="#">About</a><a href="#">Solutions</a><a href="#">Field studies</a><a href="#contact">Contacts</a>
+      </div>
+      <div class="fnav">
+        <a href="#">Doctrine</a><a href="#">Method</a><a href="#pricing">Pricing</a><a href="#">Privacy policy</a><a href="#">Terms of service</a>
+      </div>
+      <div class="fform">
+        <label>Name</label><input placeholder="YOUR NAME">
+        <label>Email</label><input placeholder="EMAIL@ADDRESS.COM">
+        <button>Send message</button>
+      </div>
+    </div>
+    <div class="base">
+      <span>SENTRA · <b>Public Intelligence</b></span>
+      <span>შპს „სენტრა აიტი" · 405841503</span>
+      <span>© 2026 · All rights reserved</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ---- Integrations node graph (07 STACK) ----
+(function(){
+  var graph = document.getElementById('graph');
+  var svg = document.getElementById('gsvg');
+  var W = 1000, H = 620, cx = W/2, cy = H/2;
+  svg.setAttribute('viewBox','0 0 '+W+' '+H);
+  // 8 source nodes: platform label + short glyph, varied radius/angle like the reference
+  var nodes = [
+    {t:'Facebook',   g:'f',  a:-90,  r:250, gray:false},
+    {t:'Telegram',   g:'✈',  a:-142, r:230, gray:false},
+    {t:'Graph API',  g:'{}', a:180,  r:300, gray:true },
+    {t:'Instagram',  g:'◎',  a:143,  r:250, gray:false},
+    {t:'YouTube',    g:'▶',  a:96,   r:270, gray:true },
+    {t:'TikTok',     g:'♪',  a:52,   r:250, gray:false},
+    {t:'X',          g:'𝕏',  a:0,    r:305, gray:false},
+    {t:'Threads',    g:'@',  a:-40,  r:240, gray:true }
+  ];
+  var ns='http://www.w3.org/2000/svg';
+  function line(x1,y1,x2,y2,dash,op){var l=document.createElementNS(ns,'line');l.setAttribute('x1',x1);l.setAttribute('y1',y1);l.setAttribute('x2',x2);l.setAttribute('y2',y2);l.setAttribute('stroke','#9c9894');l.setAttribute('stroke-width','1');l.setAttribute('stroke-dasharray',dash);l.setAttribute('opacity',op);svg.appendChild(l);}
+  function dot(x,y,r,c,op){var d=document.createElementNS(ns,'circle');d.setAttribute('cx',x);d.setAttribute('cy',y);d.setAttribute('r',r);d.setAttribute('fill',c);d.setAttribute('opacity',op);svg.appendChild(d);}
+  var pos = nodes.map(function(n){var rad=n.a*Math.PI/180;return {x:cx+Math.cos(rad)*n.r, y:cy+Math.sin(rad)*n.r, n:n};});
+  // radial dashed connectors
+  pos.forEach(function(p){ line(cx,cy,p.x,p.y,'3 6',0.5); });
+  // scattered dots (deterministic pseudo-random)
+  var seed=7; function rnd(){seed=(seed*9301+49297)%233280;return seed/233280;}
+  for(var i=0;i<44;i++){
+    var ang=rnd()*Math.PI*2, dd=70+rnd()*300;
+    var x=cx+Math.cos(ang)*dd, y=cy+Math.sin(ang)*dd;
+    var orange=rnd()>0.82;
+    dot(x,y, orange?2.6:(1.2+rnd()*2.4), orange?'#E8552B':'#b4b0ac', orange?0.9:(0.35+rnd()*0.5));
+  }
+  // node chips
+  pos.forEach(function(p,idx){
+    var el=document.createElement('div');
+    el.className='node floatn'+(p.n.gray?' gray':'');
+    el.style.left=(p.x/W*100)+'%'; el.style.top=(p.y/H*100)+'%';
+    el.style.animationDelay=(idx*0.5)+'s';
+    el.innerHTML='<span class="ic">'+p.n.g+'</span>'+p.n.t;
+    graph.appendChild(el);
+  });
+})();
+// nav shadow on scroll
+addEventListener('scroll',function(){document.querySelector('.nav').style.boxShadow=scrollY>10?'0 1px 16px rgba(0,0,0,.05)':'none';});
+</script>
+</body>
+</html>
